@@ -2,34 +2,28 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Istri Jake Pasti Nekan Ini</title>
+    <title>Surprise Ultah 🥳</title>
     <style>
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
             text-align: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #fffbe0;
         }
         .page {
             display: none;
-            padding: 20px;
         }
         .active {
             display: block;
         }
         button {
-            padding: 15px 30px;
-            font-size: 20px;
-            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
             border-radius: 10px;
+            border: none;
             background-color: #ff69b4;
             color: white;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
         }
     </style>
 </head>
@@ -37,45 +31,55 @@
 
 <!-- Halaman 1 -->
 <div id="page1" class="page active">
-    <h1>Halaman Utama</h1>
-    <img src="istri%20jake%20pasti%20nekan%20ini/foto1.jpg.png" alt="Halaman Utama">
+    <img src="istri%20jake%20pasti%20nekan%20ini/foto1.jpg.png" alt="Halaman Utama" style="width: 90%;">
     <br>
-    <button onclick="gotoPage(2)">istri jake pasti nekan ini</button>
+    <button onclick="gotoPage(2)">Istri Jake Pasti Nekan Ini</button>
 </div>
 
 <!-- Halaman 2 -->
 <div id="page2" class="page">
-    <h1>Siap Siap Dulu</h1>
-    <img src="istri%20jake%20pasti%20nekan%20ini/foto2.jpg.png" alt="Siap Siap">
+    <img src="istri%20jake%20pasti%20nekan%20ini/foto2.jpg.png" alt="Halaman 2" style="width: 90%;">
     <br>
-    <button onclick="gotoPage(3)">siap siap dulu</button>
+    <button onclick="gotoPage(3)">Siap Siap Dulu</button>
 </div>
 
 <!-- Halaman 3 (Ambil Foto) -->
 <div id="page3" class="page">
-    <h1>Ambil Foto</h1>
+    <h1>Ayo Ambil Foto 🎥</h1>
     <video id="camera" autoplay playsinline width="300"></video>
     <br>
-    <button onclick="takePicture()">Ambil Foto</button>
+    <button onclick="takeSnapshot()">Ambil Foto</button>
     <br><br>
-    <canvas id="snapshot" style="display:none;"></canvas>
-    <br>
     <button onclick="gotoPage(4)">Next</button>
 </div>
 
-<!-- Halaman 4 (Tampilkan Foto yang Diambil) -->
+<!-- Halaman 4 (Tampilkan Foto di Digicam) -->
 <div id="page4" class="page">
-    <h1>Hasil Foto</h1>
-    <img id="resultPhoto" src="istri%20jake%20pasti%20nekan%20ini/foto4.jpg.png" alt="Foto Hasil">
+    <h1>Hasil Foto 🎉</h1>
+    <div style="position: relative; display: inline-block;">
+        <img src="istri%20jake%20pasti%20nekan%20ini/foto4.jpg.png" alt="Frame Digicam" style="width: 90%;">
+        <img id="resultPhoto" 
+             src="" 
+             alt="Foto Hasil" 
+             style="
+                 position: absolute;
+                 top: 27%; 
+                 left: 25%;
+                 width: 50%; 
+                 height: 42%;
+                 object-fit: cover;
+                 border-radius: 8px;">
+    </div>
 </div>
 
-<!-- Halaman 5 -->
+<!-- Halaman 5 (Surprise) -->
 <div id="page5" class="page">
-    <h1>Halaman Kejutan</h1>
-    <img src="istri%20jake%20pasti%20nekan%20ini/foto5.jpg.png" alt="Kejutan">
+    <img src="istri%20jake%20pasti%20nekan%20ini/foto5.jpg.png" alt="Halaman Surprise" style="width: 90%;">
 </div>
 
 <script>
+    let snapshotData = "";
+
     function gotoPage(pageNum) {
         document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
         document.getElementById('page' + pageNum).classList.add('active');
@@ -83,37 +87,3 @@
         if (pageNum === 3) {
             startCamera();
         }
-
-        if (pageNum === 4) {
-            document.getElementById('resultPhoto').src = snapshotData || "istri%20jake%20pasti%20nekan%20ini/foto4.jpg.png";
-            setTimeout(() => gotoPage(5), 3000);
-        }
-    }
-
-    let videoStream;
-    let snapshotData;
-
-    function startCamera() {
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                videoStream = stream;
-                document.getElementById('camera').srcObject = stream;
-            })
-            .catch(err => alert('Gagal mengakses kamera: ' + err));
-    }
-
-    function takePicture() {
-        const video = document.getElementById('camera');
-        const canvas = document.getElementById('snapshot');
-        const context = canvas.getContext('2d');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        snapshotData = canvas.toDataURL('image/png');
-        videoStream.getTracks().forEach(track => track.stop());
-    }
-</script>
-
-</body>
-</html>
-
