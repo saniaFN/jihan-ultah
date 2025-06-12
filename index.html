@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Istri Jake Pasti Nekan Ini</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            text-align: center;
+        }
+        .page {
+            display: none;
+            padding: 20px;
+        }
+        .active {
+            display: block;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            background-color: #ff69b4;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Halaman 1 -->
+<div id="page1" class="page active">
+    <h1>Halaman Utama</h1>
+    <img src="foto1.jpg" alt="Halaman Utama">
+    <br>
+    <button onclick="gotoPage(2)">istri jake pasti nekan ini</button>
+</div>
+
+<!-- Halaman 2 -->
+<div id="page2" class="page">
+    <h1>Siap Siap Dulu</h1>
+    <img src="foto2.jpg" alt="Siap Siap">
+    <br>
+    <button onclick="gotoPage(3)">siap siap dulu</button>
+</div>
+
+<!-- Halaman 3 (Ambil Foto) -->
+<div id="page3" class="page">
+    <h1>Ambil Foto</h1>
+    <video id="camera" autoplay playsinline width="300"></video>
+    <br>
+    <button onclick="takePicture()">Ambil Foto</button>
+    <br><br>
+    <canvas id="snapshot" style="display:none;"></canvas>
+    <br>
+    <button onclick="gotoPage(4)">Next</button>
+</div>
+
+<!-- Halaman 4 (Tampilkan Foto yang Diambil) -->
+<div id="page4" class="page">
+    <h1>Hasil Foto</h1>
+    <img id="resultPhoto" src="foto4.jpg" alt="Foto Hasil">
+</div>
+
+<!-- Halaman 5 -->
+<div id="page5" class="page">
+    <h1>Halaman Kejutan</h1>
+    <img src="foto5.jpg" alt="Kejutan">
+</div>
+
+<script>
+    function gotoPage(pageNum) {
+        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+        document.getElementById('page' + pageNum).classList.add('active');
+
+        if (pageNum === 3) {
+            startCamera();
+        }
+
+        if (pageNum === 4) {
+            // tampilkan foto hasil snapshot
+            document.getElementById('resultPhoto').src = snapshotData || "foto4.jpg";
+            // setelah beberapa detik munculkan halaman 5
+            setTimeout(() => gotoPage(5), 3000); // 3 detik, bisa kamu ganti waktunya
+        }
+    }
+
+    let videoStream;
+    let snapshotData;
+
+    function startCamera() {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                videoStream = stream;
+                document.getElementById('camera').srcObject = stream;
+            })
+            .catch(err => alert('Gagal mengakses kamera: ' + err));
+    }
+
+    function takePicture() {
+        const video = document.getElementById('camera');
+        const canvas = document.getElementById('snapshot');
+        const context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        snapshotData = canvas.toDataURL('image/png');
+
+        // stop kamera setelah foto diambil
+        videoStream.getTracks().forEach(track => track.stop());
+    }
+</script>
+
+</body>
+</html>
