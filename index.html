@@ -38,7 +38,7 @@
 <!-- Halaman 1 -->
 <div id="page1" class="page active">
     <h1>Halaman Utama</h1>
-    <img src="foto1.jpg" alt="Halaman Utama">
+    <img src="istri%20jake%20pasti%20nekan%20ini/foto1.jpg.png" alt="Halaman Utama">
     <br>
     <button onclick="gotoPage(2)">istri jake pasti nekan ini</button>
 </div>
@@ -46,7 +46,7 @@
 <!-- Halaman 2 -->
 <div id="page2" class="page">
     <h1>Siap Siap Dulu</h1>
-    <img src="foto2.jpg" alt="Siap Siap">
+    <img src="istri%20jake%20pasti%20nekan%20ini/foto2.jpg.png" alt="Siap Siap">
     <br>
     <button onclick="gotoPage(3)">siap siap dulu</button>
 </div>
@@ -66,13 +66,13 @@
 <!-- Halaman 4 (Tampilkan Foto yang Diambil) -->
 <div id="page4" class="page">
     <h1>Hasil Foto</h1>
-    <img id="resultPhoto" src="foto4.jpg" alt="Foto Hasil">
+    <img id="resultPhoto" src="istri%20jake%20pasti%20nekan%20ini/foto4.jpg.png" alt="Foto Hasil">
 </div>
 
 <!-- Halaman 5 -->
 <div id="page5" class="page">
     <h1>Halaman Kejutan</h1>
-    <img src="foto5.jpg" alt="Kejutan">
+    <img src="istri%20jake%20pasti%20nekan%20ini/foto5.jpg.png" alt="Kejutan">
 </div>
 
 <script>
@@ -85,10 +85,8 @@
         }
 
         if (pageNum === 4) {
-            // tampilkan foto hasil snapshot
-            document.getElementById('resultPhoto').src = snapshotData || "foto4.jpg";
-            // setelah beberapa detik munculkan halaman 5
-            setTimeout(() => gotoPage(5), 3000); // 3 detik, bisa kamu ganti waktunya
+            document.getElementById('resultPhoto').src = snapshotData || "istri%20jake%20pasti%20nekan%20ini/foto4.jpg.png";
+            setTimeout(() => gotoPage(5), 3000);
         }
     }
 
@@ -112,11 +110,10 @@
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
         snapshotData = canvas.toDataURL('image/png');
-
-        // stop kamera setelah foto diambil
         videoStream.getTracks().forEach(track => track.stop());
     }
 </script>
 
 </body>
 </html>
+
