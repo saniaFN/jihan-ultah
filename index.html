@@ -4,9 +4,14 @@
   <meta charset="UTF-8">
   <title>Web Ultah</title>
   <style>
-    body, html {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100vw;
+      height: 100vh;
       overflow: hidden;
       font-family: 'Comic Sans MS', cursive;
     }
@@ -54,6 +59,7 @@
       height: 38.5%;
       object-fit: cover;
       border-radius: 6px;
+      z-index: 1;
     }
   </style>
 </head>
@@ -74,9 +80,11 @@
 
   <div id="page4" class="page" style="background-image: url('istri%20jake%20pasti%20nekan%20ini/foto4.jpg.png');">
     <img id="resultPhoto" src="">
+    <button onclick="gotoPage(5)">Lanjut</button>
   </div>
 
   <div id="page5" class="page" style="background-image: url('istri%20jake%20pasti%20nekan%20ini/foto5.jpg.png');">
+    <h1 style="color:white; text-align:center; position:absolute; bottom:10%; width:100%; font-size:2rem; text-shadow:2px 2px 5px black;">Selamat Ulang Tahun 🎉</h1>
   </div>
 
   <script>
@@ -94,7 +102,6 @@
           return;
         }
         document.getElementById('resultPhoto').src = snapshotData;
-        setTimeout(() => gotoPage(5), 3000);
       }
     }
 
