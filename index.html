@@ -1,89 +1,115 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Surprise Ultah 🥳</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            background-color: #fffbe0;
-        }
-        .page {
-            display: none;
-        }
-        .active {
-            display: block;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 18px;
-            margin-top: 20px;
-            cursor: pointer;
-            border-radius: 10px;
-            border: none;
-            background-color: #ff69b4;
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Web Ultah</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Comic Sans MS', cursive;
+    }
+    .page {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .active {
+      display: block;
+    }
+    button {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #ff69b4;
+      color: white;
+      cursor: pointer;
+    }
+    #camera {
+      width: 70%;
+      margin-top: 20%;
+      border-radius: 20px;
+    }
+    #resultPhoto {
+      position: absolute;
+      top: 27%;
+      left: 25%;
+      width: 50%;
+      height: 42%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-
-<!-- Halaman 1 -->
-<div id="page1" class="page active">
-    <img src="istri%20jake%20pasti%20nekan%20ini/foto1.jpg.png" alt="Halaman Utama" style="width: 90%;">
-    <br>
+  <div id="page1" class="page active" style="background-image: url('istri%20jake%20pasti%20nekan%20ini/foto1.jpg.png');">
     <button onclick="gotoPage(2)">Istri Jake Pasti Nekan Ini</button>
-</div>
+  </div>
 
-<!-- Halaman 2 -->
-<div id="page2" class="page">
-    <img src="istri%20jake%20pasti%20nekan%20ini/foto2.jpg.png" alt="Halaman 2" style="width: 90%;">
-    <br>
+  <div id="page2" class="page" style="background-image: url('istri%20jake%20pasti%20nekan%20ini/foto2.jpg.png');">
     <button onclick="gotoPage(3)">Siap Siap Dulu</button>
-</div>
+  </div>
 
-<!-- Halaman 3 (Ambil Foto) -->
-<div id="page3" class="page">
-    <h1>Ayo Ambil Foto 🎥</h1>
-    <video id="camera" autoplay playsinline width="300"></video>
-    <br>
+  <div id="page3" class="page" style="background-image: url('istri%20jake%20pasti%20nekan%20ini/foto3.jpg.png');">
+    <video id="camera" autoplay playsinline></video>
     <button onclick="takeSnapshot()">Ambil Foto</button>
-    <br><br>
-    <button onclick="gotoPage(4)">Next</button>
-</div>
+    <button style="bottom: 15%;" onclick="gotoPage(4)">Next</button>
+  </div>
 
-<!-- Halaman 4 (Tampilkan Foto di Digicam) -->
-<div id="page4" class="page">
-    <h1>Hasil Foto 🎉</h1>
-    <div style="position: relative; display: inline-block;">
-        <img src="istri%20jake%20pasti%20nekan%20ini/foto4.jpg.png" alt="Frame Digicam" style="width: 90%;">
-        <img id="resultPhoto" 
-             src="" 
-             alt="Foto Hasil" 
-             style="
-                 position: absolute;
-                 top: 27%; 
-                 left: 25%;
-                 width: 50%; 
-                 height: 42%;
-                 object-fit: cover;
-                 border-radius: 8px;">
-    </div>
-</div>
+  <div id="page4" class="page" style="background-image: url('istri%20jake%20pasti%20nekan%20ini/foto4.jpg.png');">
+    <img id="resultPhoto" src="">
+  </div>
 
-<!-- Halaman 5 (Surprise) -->
-<div id="page5" class="page">
-    <img src="istri%20jake%20pasti%20nekan%20ini/foto5.jpg.png" alt="Halaman Surprise" style="width: 90%;">
-</div>
+  <div id="page5" class="page" style="background-image: url('istri%20jake%20pasti%20nekan%20ini/foto5.jpg.png');">
+  </div>
 
-<script>
+  <script>
     let snapshotData = "";
 
-    function gotoPage(pageNum) {
-        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-        document.getElementById('page' + pageNum).classList.add('active');
+    function gotoPage(num) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + num).classList.add('active');
 
-        if (pageNum === 3) {
-            startCamera();
+      if (num === 3) startCamera();
+      if (num === 4) {
+        if (!snapshotData) {
+          alert("Ambil foto dulu ya!");
+          gotoPage(3);
+          return;
         }
+        document.getElementById('resultPhoto').src = snapshotData;
+        setTimeout(() => gotoPage(5), 3000);
+      }
+    }
+
+    function startCamera() {
+      const video = document.getElementById('camera');
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => video.srcObject = stream)
+        .catch(err => alert("Gagal akses kamera: " + err));
+    }
+
+    function takeSnapshot() {
+      const video = document.getElementById('camera');
+      const canvas = document.createElement('canvas');
+      const width = video.videoWidth || 640;
+      const height = video.videoHeight || 480;
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, width, height);
+      snapshotData = canvas.toDataURL('image/png');
+      alert("Foto diambil! 🎉");
+    }
+  </script>
+</body>
+</html>
