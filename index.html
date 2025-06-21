@@ -33,20 +33,27 @@
       background-color: #ff69b4;
       color: white;
       cursor: pointer;
+      z-index: 2;
     }
     #camera {
-      width: 70%;
-      margin-top: 20%;
-      border-radius: 20px;
+      width: 300px;
+      height: 300px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 12px;
+      object-fit: cover;
+      z-index: 1;
     }
     #resultPhoto {
       position: absolute;
-      top: 27%;
-      left: 25%;
-      width: 50%;
-      height: 42%;
+      top: 27.3%;
+      left: 33.7%;
+      width: 32.5%;
+      height: 38.5%;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 6px;
     }
   </style>
 </head>
@@ -61,7 +68,7 @@
 
   <div id="page3" class="page" style="background-image: url('istri%20jake%20pasti%20nekan%20ini/foto3.jpg.png');">
     <video id="camera" autoplay playsinline></video>
-    <button onclick="takeSnapshot()">Ambil Foto</button>
+    <button onclick="takeSnapshot()">Ambil Foto & Gaya!</button>
     <button style="bottom: 15%;" onclick="gotoPage(4)">Next</button>
   </div>
 
@@ -101,8 +108,8 @@
     function takeSnapshot() {
       const video = document.getElementById('camera');
       const canvas = document.createElement('canvas');
-      const width = video.videoWidth || 640;
-      const height = video.videoHeight || 480;
+      const width = 300;
+      const height = 300;
       canvas.width = width;
       canvas.height = height;
       const ctx = canvas.getContext('2d');
